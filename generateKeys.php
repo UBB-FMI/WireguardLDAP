@@ -1,14 +1,25 @@
 <?php
-include 'Curve25519.php';
+require_once 'PHP-Curve25519/lib/Curve25519.php';
 
-function generateWireguardKeypair()
+function generateWireguardKeypair($theSeed,$keyPassword)
 {
-	$theInstance = new Curve25519();
+	$theInstance = new Curve25519\Curve25519();
 
-	$newSecret
-	$mySecret = random_bytes(32);
+	$seedInitialization = "";
+	//SEED THE SECRET
+	foreach ($theSeed as $seedIterator)
+	{
+		$seedInitialization .= $seedIterator;
+	}
+	/////////////////
+	$mySecret = hash_pbkdf2("sha512", $seedInitialization, $keyPassword, 4096,32,true);
+	$mySecret = substr($mySecret,0,32);
+
 	$myPublic = $theInstance->publicKey($mySecret);
+
+	return array(base64_encode($mySecret),base64_encode($myPublic));
 }
 
-var_dump(base64_encode($myPublic));
+//var_dump(generateWireguardKeypair(array("foo", "bar", "hello", "world"),"asd"));
+
 ?>

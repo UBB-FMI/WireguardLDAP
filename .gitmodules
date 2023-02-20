@@ -1,0 +1,3 @@
+[submodule "PHP-Curve25519"]
+	path = PHP-Curve25519
+	url = https://github.com/lt/PHP-Curve25519.git
