@@ -8,11 +8,16 @@
 			<img src="logo.png" style="width:100%">
 			<h1>Wireguard FMI</h1>
 			<form method="post">
-				<input type="text" name="u" placeholder="Username" required="required" />
-				<input type="password" name="p" placeholder="Password" required="required" />
+				<select name="domain" id="domain">
+					<option value="cs">Teachers &#38; Staff</option>
+					<option value="scs">Students</option>
+				</select>
+				<input type="text" name="username" placeholder="Username" required="required" />
+				<input type="password" name="password" placeholder="Password" required="required" />
+				<input type="password" name="keypassword" placeholder="Key Passphrase" required="required" />
 				<button type="submit" class="btn btn-primary btn-block btn-large">Generate</button>
 			</form>
-			<h2>Since both classes are doing the same thing, I should be able to merge it into one. How can I do that?</h2>
+			<h2 id="response">This user can't access the Wireguard VPN.</h2>
 		</div>
 	</body>
 </html>
