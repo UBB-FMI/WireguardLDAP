@@ -108,16 +108,15 @@ body {
 }
 .login {
      position: absolute;
-     top: 50%;
+     top: 25%;
      left: 50%;
      margin: -150px 0 0 -150px;
      width:300px;
      height:300px;
 }
-.login h1 {
+.login h1 , .login h2 {
      color: #fff;
      text-shadow: 0 0 10px rgba(0,0,0,0.3);
-     letter-spacing:1px;
      text-align:center;
 }
 input {
