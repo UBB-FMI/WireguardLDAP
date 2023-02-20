@@ -2,22 +2,29 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="front.js"></script>
 	</head>
 	<body>
 		<div class="login">
 			<img src="logo.png" style="width:100%">
 			<h1>Wireguard FMI</h1>
-			<form method="post">
-				<select name="domain" id="domain">
+			<form>
+				<select id="theDomainSelector">
 					<option value="cs">Teachers &#38; Staff</option>
 					<option value="scs">Students</option>
 				</select>
-				<input type="text" name="username" placeholder="Username" required="required" />
-				<input type="password" name="password" placeholder="Password" required="required" />
-				<input type="password" name="keypassword" placeholder="Key Passphrase" required="required" />
-				<button type="submit" class="btn btn-primary btn-block btn-large">Generate</button>
+				<input type="text" id="theUsername" placeholder="Username" required="required" />
+				<input type="password" id="thePassword" placeholder="Password" required="required" />
+				<input type="password" id="theKeyPassword" placeholder="Key Passphrase" required="required" />
+				<button type="button" id="theGenerateButton" class="btn btn-primary btn-block btn-large">Generate</button>
 			</form>
-			<h2 id="response">This user can't access the Wireguard VPN.</h2>
+			<h2 id="responseField">Please wait, page loading.</h2>
 		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				bindJavaScript();
+			});
+		</script>
 	</body>
 </html>
