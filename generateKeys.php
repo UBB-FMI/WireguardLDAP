@@ -19,7 +19,4 @@ function generateWireguardKeypair($theSeed,$keyPassword)
 
 	return array(base64_encode($mySecret),base64_encode($myPublic));
 }
-
-//var_dump(generateWireguardKeypair(array("foo", "bar", "hello", "world"),"asd"));
-
 ?>
