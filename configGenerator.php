@@ -1,4 +1,6 @@
 <?php
+	if ($_SERVER['REQUEST_METHOD'] === 'GET') { exit; }
+
 	function generateConfiguration($ipAndNetmask,$clientPrivateKey,$serverPublicKey,$allowedIPs,$endpointAddress)
 	{
 		$configurationTemplate = array(

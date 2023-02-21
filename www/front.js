@@ -22,7 +22,16 @@ function updateStatus(theMessage,isError = 0)
  */
 function generateCodeStageTwo(theDomainString,theUsernameString,thePasswordString,theKeyPasswordString)
 {
-
+	let codeGenerationRequest = new XMLHttpRequest();
+	codeGenerationRequest.onreadystatechange = function()
+	{
+		if (this.readyState == 4 && this.status == 200)
+		{
+			updateStatus(codeGenerationRequest.responseText);
+		}
+	};
+	codeGenerationRequest.open("POST", "/index.php", true);
+	codeGenerationRequest.send(JSON.stringify({ "theDomain": theDomainString, "theUsername": theUsernameString, "thePassword": thePasswordString, "theKeyPassword": theKeyPasswordString }));
 }
 /*
  * Stage 1 - Check field validity

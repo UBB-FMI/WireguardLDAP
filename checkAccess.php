@@ -1,4 +1,5 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] === 'GET') { exit; }
 
 /*
  * Checks if a given user (corresponding to a particular domain, be it SCS or CS) is a member of the "Wireguard" group in the Domain Controller.
