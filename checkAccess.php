@@ -87,7 +87,7 @@ function checkWireguardAccess($usernameDomain,$usernameUID,$password)
 		}
 		else
 		{
-			$preparedResponse["msg"] = "Invalid username and password combination";
+			$preparedResponse["msg"] = "Incorrect username and password combination";
 			$preparedResponse["code"] = 3;
 		}
 	}
