@@ -6,6 +6,7 @@
 	//TODO Dynamically compute this from the actual server configuration
 	$standardServerParameters=[];
 	$standardServerParameters[0] = array(
+		"interface"=>"privileged",
 		"baseIP"=>"10.0.16.2",
 		"maxIP"=> "10.0.31.254",
 		"netMask"=>"20",
