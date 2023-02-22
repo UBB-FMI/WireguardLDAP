@@ -35,10 +35,10 @@
 			switch($theDomain)
 			{
 				case "cs":
-					$privilegeLevel = 1; //TODO SWITCH THESE HERE, DEBUGGING ONLY!!!
+					$privilegeLevel = 0;
 					break;
 				default:
-					$privilegeLevel = 0;
+					$privilegeLevel = 1;
 					break;
 			}
 
@@ -46,7 +46,7 @@
 
 			if ($deploymentResult['code'] === 0)
 			{
-				$generatedConfiguration = generateConfiguration($privilegeLevel,$deploymentResult['ip'],$deploymentResult['netmask'],$clientPrivateKey,"0.0.0.0/0");
+				$generatedConfiguration = generateConfiguration($privilegeLevel,$deploymentResult['ip'],$deploymentResult['netmask'],$clientPrivateKey);
 
 				echo buildJSONResponse("Generation complete.",0,base64_encode($generatedConfiguration));
 			}
