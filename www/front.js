@@ -15,6 +15,26 @@ function updateStatus(theMessage,isError = 0)
 	}
 }
 
+function generateCodeStageThree(theConfigrationB64,theUsernameString)
+{
+	let saveData = (function ()
+	{
+		var a = document.createElement("a");
+		document.body.appendChild(a);
+		a.style = "display: none";
+		return function (data, fileName)
+		{
+			blob = new Blob([data], {type: "octet/stream"}),
+			url = window.URL.createObjectURL(blob);
+			a.href = url;
+			a.download = fileName;
+			a.click();
+			window.URL.revokeObjectURL(url);
+		};
+	}());
+
+	saveData(atob(theConfigrationB64),theUsernameString+"_wireguard.conf");
+}
 /*
  * Stage 2 - Check backend compatibility.
  *
@@ -27,7 +47,21 @@ function generateCodeStageTwo(theDomainString,theUsernameString,thePasswordStrin
 	{
 		if (this.readyState == 4 && this.status == 200)
 		{
-			updateStatus(codeGenerationRequest.responseText);
+			let serverResponse = JSON.parse(codeGenerationRequest.responseText);
+
+			let serverResponseCode = serverResponse.code;
+			let serverResponseMessage = serverResponse.code;
+
+			if (serverResponseCode != 0)
+			{
+				updateStatus(serverResponseMessage,serverResponseCode);
+			}
+			else
+			{
+				updateStatus("Generation complete!");
+				let serverResponseDataB64 = serverResponse.data;
+				generateCodeStageThree(serverResponseDataB64,theUsernameString);
+			}
 		}
 	};
 	codeGenerationRequest.open("POST", "/index.php", true);

@@ -10,7 +10,7 @@
 	$standardServerParameters=[];
 	$standardServerParameters[0] = array(
 		"interface"=>"privileged",
-		"baseIP"=>"10.0.16.1",
+		"baseIP"=>"10.0.16.2",
 		"maxIP"=> "10.0.31.254",
 		"netMask"=>"20",
 		"pubKey"=>"ZBaK+E4YDFGGzWlG5cDYt/eFRQ6ajL7env4HYC7CK0E=",

@@ -47,8 +47,8 @@
 			if ($deploymentResult['code'] === 0)
 			{
 				$generatedConfiguration = generateConfiguration($privilegeLevel,$deploymentResult['ip'],$deploymentResult['netmask'],$clientPrivateKey,"0.0.0.0/0");
-				echo $generatedConfiguration;
-				//Success, generate config
+
+				echo buildJSONResponse("Generation complete.",0,base64_encode($generatedConfiguration));
 			}
 			else
 			{
