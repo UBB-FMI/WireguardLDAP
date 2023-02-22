@@ -73,8 +73,8 @@
 
 					$toReturn['code'] = 0;
 					$toReturn['msg'] = "Succesful update.";
-					$toReturn['ip'] = $allocationResult['ip'];
-					$toReturn['netmask'] = $allocationResult['netmask'];
+					$toReturn['ip'] = $updateResult['ip'];
+					$toReturn['netmask'] = $updateResult['netmask'];
 
 
 					return $toReturn;
