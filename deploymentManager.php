@@ -3,7 +3,7 @@
 
 	require_once 'standardDefinitions.php';
 
-	deployWireguardInstance(0,"1f0","+dfas");
+	deployWireguardInstance(0,"user","+caramida");
 
 	function deployWireguardInstance($privilegeLevel,$theUsername,$theClientPublicKey)
 	{
@@ -19,62 +19,64 @@
 
 	function _allocateIP($privilegeLevel,$theUsername,$theClientPublicKey,$theDatabase)
 	{
-		//Offset calculation
-		$theStatement = $theDatabase->prepare('SELECT MAX(addressOffset) FROM clientData WHERE privilegeLevel=:privilegeLevel');
-		$theStatement -> bindValue(':privilegeLevel', $privilegeLevel , SQLITE3_INTEGER);
+		$userCheckingStatement = $theDatabase->prepare('SELECT theUsername, clientPubKey, creationDate, addressOffset, privilegeLevel FROM clientData WHERE theUsername = :theUsername');
+		$userCheckingStatement -> bindValue(':theUsername', $theUsername , SQLITE3_TEXT);
+		$userCheckingResult = $userCheckingStatement -> execute();
 
-		$theStatementExecution = $theStatement->execute();
-		if ($theStatementExecution === false)
+		if ($userCheckingResult === false)
 		{
 			$toReturn['code'] = -1;
-			$toReturn['msg'] = "Database query failure.";
+			$toReturn['msg'] = "Could not check if the user already has an account.";
 
 			return $toReturn;
 		}
 		else
 		{
-			$userCheckingStatement = $theDatabase->prepare('SELECT theUsername, clientPubKey, creationDate, addressOffset, privilegeLevel FROM clientData WHERE theUsername = :theUsername');
-			$userCheckingStatement -> bindValue(':theUsername', $theUsername , SQLITE3_TEXT);
-			$userCheckingResult = $userCheckingStatement -> execute();
+			global $standardServerParameters;
+			$baseIPAddress = ip2long($standardServerParameters[$privilegeLevel]['baseIP']);
+			$maxIPAddress = ip2long($standardServerParameters[$privilegeLevel]['maxIP']);
+			$actualNetmask = $standardServerParameters[$privilegeLevel]['netMask'];
 
-			if ($userCheckingResult === false)
+			$userCheckingArray = $userCheckingResult->fetchArray();
+			if ($userCheckingArray['0'] !== NULL) //Check if the user already has an account, and has merely regenerated the key
 			{
-				$toReturn['code'] = -2;
-				$toReturn['msg'] = "Could not check if the user already has an account.";
+				$userUpdateStatement = $theDatabase->prepare('UPDATE clientData SET clientPubKey=:clientPubKey, creationDate=:creationDate WHERE theUsername=:theUsername');
+				$userUpdateStatement -> bindValue(':clientPubKey', $theClientPublicKey , SQLITE3_TEXT);
+				$userUpdateStatement -> bindValue(':creationDate', date("d-m-Y") , SQLITE3_TEXT);
+				$userUpdateStatement -> bindValue(':theUsername', $theUsername , SQLITE3_TEXT);
+				$userUpdateResult = $userUpdateStatement -> execute();
+
+				if ($userUpdateResult === false)
+				{
+					$toReturn['code'] = -2;
+					$toReturn['msg'] = "Could not update the user data.";
+				}
+				else
+				{
+					$actualIPAddress = $baseIPAddress + (int)$userCheckingArray['addressOffset'];
+
+					$toReturn['code'] = 0;
+					$toReturn['msg'] = "Renewal succesful.";
+					$toReturn['ip'] = long2ip($actualIPAddress);
+					$toReturn['netmask'] = $actualNetmask;
+				}
+
+				$userCheckingStatement->close();
+				$userUpdateStatement->close();
+				return $toReturn;
 			}
 			else
 			{
-				global $standardServerParameters;
-				$baseIPAddress = ip2long($standardServerParameters[$privilegeLevel]['baseIP']);
-				$maxIPAddress = ip2long($standardServerParameters[$privilegeLevel]['maxIP']);
-				$actualNetmask = $standardServerParameters[$privilegeLevel]['netMask'];
+				//Offset calculation
+				$theStatement = $theDatabase->prepare('SELECT MAX(addressOffset) FROM clientData WHERE privilegeLevel=:privilegeLevel');
+				$theStatement -> bindValue(':privilegeLevel', $privilegeLevel , SQLITE3_INTEGER);
 
-				$userCheckingArray = $userCheckingResult->fetchArray();
-				if ($userCheckingArray['0'] !== NULL) //Check if the user already has an account, and has merely regenerated the key
+				$theStatementExecution = $theStatement->execute();
+				if ($theStatementExecution === false)
 				{
-					$userUpdateStatement = $theDatabase->prepare('UPDATE clientData SET clientPubKey=:clientPubKey, creationDate=:creationDate WHERE theUsername=:theUsername');
-					$userUpdateStatement -> bindValue(':clientPubKey', $theClientPublicKey , SQLITE3_TEXT);
-					$userUpdateStatement -> bindValue(':creationDate', date("d-m-Y") , SQLITE3_TEXT);
-					$userUpdateStatement -> bindValue(':theUsername', $theUsername , SQLITE3_TEXT);
-					$userUpdateResult = $userUpdateStatement -> execute();
+					$toReturn['code'] = -3;
+					$toReturn['msg'] = "Database query failure.";
 
-					if ($userUpdateResult === false)
-					{
-						$toReturn['code'] = -3;
-						$toReturn['msg'] = "Could not update the user data.";
-					}
-					else
-					{
-						$actualIPAddress = $baseIPAddress + (int)$userCheckingArray['addressOffset'];
-
-						$toReturn['code'] = 0;
-						$toReturn['msg'] = "Renewal succesful.";
-						$toReturn['ip'] = long2ip($actualIPAddress);
-						$toReturn['netmask'] = $actualNetmask;
-					}
-
-					$userCheckingStatement->close();
-					$userUpdateStatement->close();
 					return $toReturn;
 				}
 				else
