@@ -50,7 +50,7 @@ function generateCodeStageTwo(theDomainString,theUsernameString,thePasswordStrin
 			let serverResponse = JSON.parse(codeGenerationRequest.responseText);
 
 			let serverResponseCode = serverResponse.code;
-			let serverResponseMessage = serverResponse.code;
+			let serverResponseMessage = serverResponse.msg;
 
 			if (serverResponseCode != 0)
 			{
