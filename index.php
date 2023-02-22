@@ -35,10 +35,10 @@
 			switch($theDomain)
 			{
 				case "cs":
-					$privilegeLevel = 0;
+					$privilegeLevel = 1; //TODO SWITCH THESE HERE, DEBUGGING ONLY!!!
 					break;
 				default:
-					$privilegeLevel = 1;
+					$privilegeLevel = 0;
 					break;
 			}
 
@@ -46,27 +46,22 @@
 
 			if ($deploymentResult['code'] === 0)
 			{
+				$generatedConfiguration = generateConfiguration($privilegeLevel,$deploymentResult['ip'],$deploymentResult['netmask'],$clientPrivateKey,"0.0.0.0/0");
+				echo $generatedConfiguration;
 				//Success, generate config
+			}
+			else
+			{
+				echo buildJSONResponse($deploymentResult['msg'],2);
 			}
 		}
 		else
 		{
-			$accessFailedMessage = "Something went wrong.";
-
-			//Special cases messages
-			switch ($checkAccess['code'])
-			{
-				case 7:
-				case 3:
-					$accessFailedMessage = $checkAccess['msg'];
-					break;
-			}
-			echo buildJSONResponse($accessFailedMessage,1);
+			echo buildJSONResponse($checkAccess['msg'],1);
 		}
 	}
 	else
 	{
 		echo buildJSONResponse("Invalid input data.",1);
 	}
-	//echo generateConfiguration(1,2,3,4,5);
 ?>

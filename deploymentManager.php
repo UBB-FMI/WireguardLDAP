@@ -4,8 +4,6 @@
 	require_once 'standardDefinitions.php';
 	require_once 'systemInteraction.php';
 
-	var_dump(deployWireguardInstance(0,"user","+caramida"));
-
 	function deployWireguardInstance($privilegeLevel,$theUsername,$theClientPublicKey)
 	{
 		global $standardServerParameters;
@@ -42,10 +40,12 @@
 				}
 				else
 				{
-					addWireguardPeer($localServerParameters['interface'],$theClientPublicKey,$updateResult['ip'],$updateResult['netmask']);
+					addWireguardPeer($localServerParameters['interface'],$theClientPublicKey,$allocationResult['ip']);
 
 					$toReturn['code'] = 0;
 					$toReturn['msg'] = "Successful insertion.";
+					$toReturn['ip'] = $allocationResult['ip'];
+					$toReturn['netmask'] = $allocationResult['netmask'];
 
 					return $toReturn;
 				}
@@ -68,11 +68,14 @@
 				else
 				{
 					//TODO what happens if upon the completion of the update, the assigned IP changes?
-					removeWireguardPeer($localServerParameters['interface'],$userCheckingArray['clientPubKey'],$updateResult['ip'],$updateResult['netmask']);
-					addWireguardPeer($localServerParameters['interface'],$theClientPublicKey,$updateResult['ip'],$updateResult['netmask']);
+					removeWireguardPeer($localServerParameters['interface'],$userCheckingArray['clientPubKey'],$updateResult['ip']);
+					addWireguardPeer($localServerParameters['interface'],$theClientPublicKey,$updateResult['ip']);
 
 					$toReturn['code'] = 0;
 					$toReturn['msg'] = "Succesful update.";
+					$toReturn['ip'] = $allocationResult['ip'];
+					$toReturn['netmask'] = $allocationResult['netmask'];
+
 
 					return $toReturn;
 				}
