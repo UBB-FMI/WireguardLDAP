@@ -6,6 +6,7 @@
 	require_once 'generateKeys.php';
 	require_once 'configGenerator.php';
 	require_once 'jsonBuilder.php';
+	require_once 'deploymentManager.php';
 
 	function validateInput($theData)
 	{
@@ -27,7 +28,26 @@
 		{
 			$theKeyPair = generateWireguardKeypair(array($theDomain,$theUsername,$thePassword),$theKeyPassword);
 
-			$deploymentResult = deployWireguardInstance($theDomain,$theUsername,$theKeyPair); aici am ramas, trebuie sa punem standard defs in asta noua care da deploy
+			$clientPrivateKey = $theKeyPair[0];
+			$clientPublicKey = $theKeyPair[1];
+
+			$privilegeLevel = 1;
+			switch($theDomain)
+			{
+				case "cs":
+					$privilegeLevel = 0;
+					break;
+				default:
+					$privilegeLevel = 1;
+					break;
+			}
+
+			$deploymentResult = deployWireguardInstance($privilegeLevel,$theUsername,$clientPublicKey);
+
+			if ($deploymentResult['code'] === 0)
+			{
+				//Success, generate config
+			}
 		}
 		else
 		{
