@@ -5,7 +5,7 @@
 	global $standardServerParameters;
 
 	//TODO Dynamically compute this from the actual server configuration
-	$theServerIP="172.30.118.184";
+	$theServerIP="193.231.20.20";
 
 	$standardServerParameters=[];
 	$standardServerParameters[0] = array(
