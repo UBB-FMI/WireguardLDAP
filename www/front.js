@@ -64,7 +64,7 @@ function generateCodeStageTwo(theDomainString,theUsernameString,thePasswordStrin
 			}
 		}
 	};
-	codeGenerationRequest.open("POST", "/index.php", true);
+	codeGenerationRequest.open("POST", "index.php", true);
 	codeGenerationRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	codeGenerationRequest.send("theDomain=" + theDomainString + "&theUsername=" + theUsernameString + "&thePassword=" + thePasswordString + "&theKeyPassword=" + theKeyPasswordString);
 }
