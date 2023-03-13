@@ -6,10 +6,11 @@
 
 	function deployWireguardInstance($privilegeLevel,$theUsername,$theClientPublicKey)
 	{
+		global $databasePath;
 		global $standardServerParameters;
 		$localServerParameters = $standardServerParameters[$privilegeLevel];
 
-		$theDatabase = new SQLite3('test.db');
+		$theDatabase = new SQLite3($databasePath);
 		if (_initializeTable($theDatabase) === false)
 		{
 			$toReturn['code'] = -1;
