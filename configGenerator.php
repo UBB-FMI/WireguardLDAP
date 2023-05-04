@@ -17,11 +17,12 @@
 			2 => '[Interface]',
 			3 => 'Address = '.$theIP.'/'.$theNetmask,
 			4 => 'PrivateKey = '.$clientPrivateKey,
-			5 => '[Peer]',
-			6 => 'PublicKey = '.$localServerParameters['pubKey'],
-			7 => 'AllowedIPs = '.$localServerParameters['allowedIPs'],
-			8 => 'Endpoint = '.$theServerIP.':'.$localServerParameters['port'],
-			9 => 'PersistentKeepalive = 25'
+			5 => 'DNS = 8.8.8.8',
+			6 => '[Peer]',
+			7 => 'PublicKey = '.$localServerParameters['pubKey'],
+			8 => 'AllowedIPs = '.$localServerParameters['allowedIPs'],
+			9 => 'Endpoint = '.$theServerIP.':'.$localServerParameters['port'],
+			10 => 'PersistentKeepalive = 25'
 		);
 
 		$configurationResult = "";
