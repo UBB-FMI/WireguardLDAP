@@ -93,4 +93,4 @@ function checkWireguardAccess($usernameDomain,$usernameUID,$password)
 	}
 	return $preparedResponse;
 }
-?>
+

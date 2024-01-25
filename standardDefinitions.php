@@ -1,5 +1,5 @@
 <?php
-	if ($_SERVER['REQUEST_METHOD'] === 'GET') { exit; }
+	if (array_key_exists('REQUEST_METHOD', $_SERVER) && $_SERVER['REQUEST_METHOD'] === 'GET') { exit; }
 
 	global $theServerIP;
 	global $standardServerParameters;
@@ -7,6 +7,7 @@
 
 	//TODO Dynamically compute this from the actual server configuration
 	$theServerIP="193.231.20.20";
+//	$theServerIP="86.127.67.140";
 	$databasePath="/srv/wireguard_fmi/theDB.db";
 
 	$standardServerParameters=[];
@@ -26,7 +27,7 @@
 		"netMask"=>"20",
 		"pubKey"=>"KkxqXijYvoAl96xgVUOwl1J8yz9f48z1/fZH0HucnkU=",
 		"port"=>"51831",
-		"allowedIPs"=>"172.30.0.0/16"
+		"allowedIPs"=>"172.30.0.0/16, 131.159.8.236/32, 193.231.20.142/32"
 	);
 
-?>
+

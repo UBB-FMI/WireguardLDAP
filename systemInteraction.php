@@ -14,4 +14,4 @@
 		//Looks like Wireguard already sets up these rules for us, with wg-quick
 		//shell_exec('sudo ip -4 route delete '.$theClientIP.'/32 dev '.$interfaceName);
 	}
-?>
+

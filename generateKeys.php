@@ -22,4 +22,4 @@
 
 		return array(base64_encode($mySecret),base64_encode($myPublic));
 	}
-?>
+

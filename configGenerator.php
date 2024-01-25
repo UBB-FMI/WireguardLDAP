@@ -17,7 +17,7 @@
 			2 => '[Interface]',
 			3 => 'Address = '.$theIP.'/'.$theNetmask,
 			4 => 'PrivateKey = '.$clientPrivateKey,
-			5 => 'DNS = 8.8.8.8',
+			5 => 'DNS = 172.30.0.1',
 			6 => '[Peer]',
 			7 => 'PublicKey = '.$localServerParameters['pubKey'],
 			8 => 'AllowedIPs = '.$localServerParameters['allowedIPs'],
@@ -32,4 +32,4 @@
 		}
 		return $configurationResult;
 	}
-?>
+
