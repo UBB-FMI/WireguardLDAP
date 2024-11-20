@@ -66,7 +66,7 @@ function generateCodeStageTwo(theDomainString,theUsernameString,thePasswordStrin
 	};
 	codeGenerationRequest.open("POST", "index.php", true);
 	codeGenerationRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	codeGenerationRequest.send("theDomain=" + theDomainString + "&theUsername=" + theUsernameString + "&thePassword=" + thePasswordString + "&theKeyPassword=" + theKeyPasswordString);
+	codeGenerationRequest.send("theDomain=" + encodeURIComponent(theDomainString) + "&theUsername=" + encodeURIComponent(theUsernameString) + "&thePassword=" + encodeURIComponent(thePasswordString) + "&theKeyPassword=" + encodeURIComponent(theKeyPasswordString));
 }
 /*
  * Stage 1 - Check field validity
