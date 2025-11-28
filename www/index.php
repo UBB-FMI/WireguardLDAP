@@ -48,7 +48,7 @@
 		{
 			$privilegeLevel = 0;
 		}
-		elseif (str_ends_with($$microsoftEmail, '@stud.ubbcluj.ro')) 
+		elseif (str_ends_with($microsoftEmail, '@stud.ubbcluj.ro')) 
 		{
 			$privilegeLevel = 1;
 		} 

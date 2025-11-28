@@ -394,6 +394,6 @@ function bindJavaScript()
 	assignHooks();
 	if (!handleAuthorizationRedirect())
 	{
-		updateStatus("Sign in with Microsoft to request your configuration.");
+		updateStatus("Ready!");
 	}
 }
