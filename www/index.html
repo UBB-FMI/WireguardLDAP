@@ -9,22 +9,28 @@
 		<div class="login">
 			<img src="logo.png" style="width:100%">
 			<h1>Wireguard FMI</h1>
-			<h2>V1.0</h2>
+			<h2>V1.1</h2>
+
 			<form>
-				<select id="theDomainSelector">
-					<option value="cs">Teachers &#38; Staff</option>
-					<option value="scs">Students</option>
-				</select>
-				<input type="text" id="theUsername" placeholder="Username" required="required" />
-				<input type="password" id="thePassword" placeholder="Password" required="required" />
-				<input type="password" id="theKeyPassword" placeholder="Key Passphrase" required="required" />
-				<button type="button" id="theGenerateButton" class="btn btn-primary btn-block btn-large">Generate</button>
+				<button type="button" id="msLoginButton" class="btn btn-primary btn-block btn-large ms-login-btn" aria-label="Sign in with Microsoft">
+					<img src="ms_login.png" alt="Sign in with Microsoft" />
+				</button>
+
+				<div class="other-user-toggle">
+					<label>
+						<input type="checkbox" id="generateForOther">
+						Generate for somebody else
+					</label>
+					<input type="text" id="otherName" placeholder="Name" style="display:none;" />
+				</div>
 			</form>
+
 			<h2 id="responseField">Please wait, page loading.</h2>
 		</div>
 
 		<script>
-			document.addEventListener("DOMContentLoaded", () => {
+			document.addEventListener("DOMContentLoaded", () => 
+			{
 				bindJavaScript();
 			});
 		</script>

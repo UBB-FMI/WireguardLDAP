@@ -5,6 +5,8 @@
 	global $standardServerParameters;
 	global $databasePath;
 
+	global $msTenantDetails;
+
 	//TODO Dynamically compute this from the actual server configuration
 	$theServerIP="193.231.20.20";
 //	$theServerIP="86.127.67.140";
@@ -29,5 +31,16 @@
 		"port"=>"51831",
 		"allowedIPs"=>"172.30.0.0/16, 131.159.8.236/32, 193.231.20.142/32"
 	);
+
+	$msTenantDetails=[];
+	$msTenantDetails = array(
+		"tenantID"       => "5a4863ed-40c8-4fd5-8298-fbfdb7f13095",
+		"client_id"      => "5ef3d24d-9c73-4c1e-b36b-658731a8a1fb",
+		"scope"          => "openid profile offline_access",
+		"redirect_uri"   => "https://www.cs.ubbcluj.ro/vpn/",
+		"client_secret"  => "HAHANO"
+	);
+
+
 
 
