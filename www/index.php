@@ -22,8 +22,14 @@
     	return bin2hex(random_bytes($length / 2));
 	}
 
-	$microsoftCode 	= $_POST["code"];
-	$otherUser 		= $_POST["otherName"];
+	$microsoftCode 	= $_POST["code"] ?? '';
+	$otherUser 		= $_POST["otherName"] ?? '';
+
+	if (!is_string($microsoftCode) || !is_string($otherUser))
+	{
+		echo buildJSONResponse("Invalid input data.",1);
+		exit;
+	}
 
 	if (strlen($microsoftCode) > 0)
 	{
